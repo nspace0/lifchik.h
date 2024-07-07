@@ -16,9 +16,28 @@ void *s21_memset(void *string, int c, s21_size_t n) {
   return string;
 }
 
-char *s21_strncat(char *destination, const char *source, s21_size_t n) {}
+char *s21_strncat(char *destination, const char *source, s21_size_t n) {
+  char *ptr = destination;
 
-char *s21_strchr(const char *string, int c) {}
+  while (*ptr != '\0') {
+    ptr++;
+  }
+
+  while (n-- && *source != '\0') {
+    *ptr++ = *source++;
+  }
+
+  *ptr = '\0';
+
+  return destination;
+}
+
+char *s21_strchr(const char *string, int c) {
+  char *ptr = string;
+
+  
+
+}
 
 // int s21_strncmp(const char *string1, const char *string2, s21_size_t n) {}
 
