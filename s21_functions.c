@@ -33,10 +33,19 @@ char *s21_strncat(char *destination, const char *source, s21_size_t n) {
 }
 
 char *s21_strchr(const char *string, int c) {
-  char *ptr = string;
+  c = (unsigned char)c;
 
-  
+  while (*string) {
+    if (*string == c) {
+      return (char *)string;
+    }
+    string++;
+  }
 
+  if (c == '\0') {
+    return (char *)string;
+  }
+  return s21_NULL;
 }
 
 // int s21_strncmp(const char *string1, const char *string2, s21_size_t n) {}
