@@ -120,7 +120,7 @@ void *s21_to_lower(const char *string) {
 
   for (s21_size_t i = 0; i < len; i++) {
     if (string[i] >= 65 && string[i] <= 90) {
-      ptr[i] = string[i] - 32;
+      ptr[i] = string[i] + 32;
     } else {
       ptr[i] = string[i];
     }
