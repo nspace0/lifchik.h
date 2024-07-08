@@ -81,14 +81,33 @@ s21_size_t s21_strlen(const char *string) {
 
 char *s21_strpbrk(const char *string1, const char *string2) {}
 
-char *s21_strchr(const char *string, int c) {}
+char *s21_strrchr(const char *string, int c) {}
 
 char *s21_strstr(const char *haystack, const char *needle) {}
 
 char *s21_strtok(char *str, const char *delim) {}
 
 // bonus quest5
-void *s21_to_upper(const char *string) {}
+void *s21_to_upper(const char *string) {
+  if (string == s21_NULL) return s21_NULL;
+
+  s21_size_t len = s21_strlen(string);
+
+  char *ptr = (char *)malloc(sizeof(char) * (len + 1));
+
+  if (ptr == s21_NULL) return s21_NULL;
+
+  for (s21_size_t i = 0; i < len; i++) {
+    if (string[i] >= 97 && string[i] <= 122) {
+      ptr[i] = string[i] - 32;
+    } else {
+      ptr[i] = string[i];
+    }
+  }
+  ptr[len] = '\0';
+
+  return ptr;
+}
 
 void *s21_to_lower(const char *string) {}
 
