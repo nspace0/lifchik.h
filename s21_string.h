@@ -1,5 +1,6 @@
 #ifndef S21_STRING_H
 #define S21_STRING_H
+#include <stdlib.h>
 
 typedef long unsigned s21_size_t;
 #define s21_NULL (void *)0
