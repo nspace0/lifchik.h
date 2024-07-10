@@ -1,4 +1,4 @@
-#include <s21_string.h>
+#include "s21_string.h"
 void *s21_memset(void *string, int c, s21_size_t n) {
   unsigned char *p = (unsigned char *)string;
   while (n > 0) {
