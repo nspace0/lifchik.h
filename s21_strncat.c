@@ -1,4 +1,4 @@
-#include <s21_string.h>
+#include "s21_string.h"
 
 char *s21_strncat(char *destination, const char *source, s21_size_t n) {
   char *ptr = destination;
