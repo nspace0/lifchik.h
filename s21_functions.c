@@ -8,8 +8,6 @@
 
 // int s21_strncmp(const char *string1, const char *string2, s21_size_t n) {}
 
-
-
 s21_size_t s21_strcspn(const char *str1, const char *str2) {}
 
 char *s21_strerror(int errnum) {}
@@ -23,7 +21,6 @@ char *s21_strstr(const char *haystack, const char *needle) {}
 char *s21_strtok(char *str, const char *delim) {}
 
 // bonus quest5
-
 
 void *s21_insert(const char *source, const char *string,
                  s21_size_t start_index) {}
