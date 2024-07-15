@@ -10,7 +10,7 @@ char *s21_strrchr(const char *string, int c) {
     }
     string++;
   }
-  
+
   if (c == '\0') {
     return (char *)string;
   }
