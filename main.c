@@ -15,11 +15,14 @@ s21_size_t s21_strlen(const char *string) {
 
   return end - string;
 }
+void *s21_memchr(const void *string, int c, s21_size_t n) {
+  const unsigned char *ptr = (const unsigned char *)string;
+  unsigned char ch = (unsigned char)c;
 
-s21_size_t s21_strcspn(const char *str1, const char *str2) {
-  if (str1 == NULL || str2 == NULL) {
-    errno = EINVAL;
-    return 0;
+  while (n--) {
+    if (*ptr == ch) return (void *)ptr;
+
+    ptr++;
   }
 
   s21_size_t result = 0;
@@ -42,10 +45,11 @@ s21_size_t s21_strcspn(const char *str1, const char *str2) {
 
 
 int main() {
-  int len;
-  // Intializing string(Unmatched Characters)
-  const char str1[] = "Tutorialspoint";
-  const char str2[] = "ETextbook";
+  const char *str1 = "Hello, world!";
+    const char *str2 = "aeiou";
+
+    size_t result = strcspn(str1, str2);
+    printf("The first vowel in '%s' is at position %zu.\n", str1, result);
 
   len = s21_strcspn(str1, str2);
 
