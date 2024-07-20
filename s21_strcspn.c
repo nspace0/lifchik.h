@@ -2,7 +2,7 @@
 
 s21_size_t s21_strcpn(const char *str1, const char *str2) {
   if (str1 == NULL || str2 == NULL) {
-    errno = EINVAL;//delete
+    errno = EINVAL;  // delete
     return 0;
   }
 
