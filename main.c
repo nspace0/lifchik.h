@@ -41,6 +41,9 @@ void *s21_memchr(const void *string, int c, s21_size_t n) {
 
   return result;
 }
+s21_size_t s21_strcspn(const char *str1, const char *str2) {
+  
+}
 
 
 
