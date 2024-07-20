@@ -1,5 +1,7 @@
 #ifndef S21_STRING_H
 #define S21_STRING_H
+#include <errno.h>
+#include <stddef.h>
 #include <stdlib.h>
 
 typedef long unsigned s21_size_t;
