@@ -13,7 +13,6 @@ s21_size_t s21_strlen(const char *string) {
 
   return end - string;
 }
-
 void *s21_memchr(const void *string, int c, s21_size_t n) {
   const unsigned char *ptr = (const unsigned char *)string;
   unsigned char ch = (unsigned char)c;
@@ -27,11 +26,11 @@ void *s21_memchr(const void *string, int c, s21_size_t n) {
 }
 
 int main() {
-  const char str[] = "Tutorialspoint";
-  const char ch = '\0';
-  char *ret;
-  ret = s21_memchr(str, ch, s21_strlen(str));
-  printf("string after |%c| is - |%s|\n", ch, ret);
+  const char *str1 = "Hello, world!";
+    const char *str2 = "aeiou";
+
+    size_t result = strcspn(str1, str2);
+    printf("The first vowel in '%s' is at position %zu.\n", str1, result);
 
   return 0;
 }
