@@ -8,5 +8,5 @@ void *s21_memchr(const void *string, int c, s21_size_t n) {
 
     ptr++;
   }
-  return NULL;
+  return s21_NULL;
 }
