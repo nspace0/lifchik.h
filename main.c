@@ -15,43 +15,21 @@ s21_size_t s21_strlen(const char *string) {
 
   return end - string;
 }
-void *s21_memchr(const void *string, int c, s21_size_t n) {
-  const unsigned char *ptr = (const unsigned char *)string;
-  unsigned char ch = (unsigned char)c;
 
-  while (n--) {
-    if (*ptr == ch) return (void *)ptr;
-
-    ptr++;
-  }
-
-  s21_size_t result = 0;
-  int flags[256] = {0};
-
-  for (const char *p = str2; *p != '\0'; p++) {
-    flags[(unsigned char)*p] = 1;
-  }
-
-  for (const char *p = str1; *p != '\0'; p++) {
-    if (flags[(unsigned char)*p]) {
-      return result;
-    }
-    result++;
-  }
-
-  return result;
+void *s21_memcpy(void *dest, const void *src, s21_size_t n) {
+  unsigned char *ptrDest = (unsigned char *)dest;
+  const unsigned char *ptrSrc = (const unsigned char *)src;
+  while (n--) *ptrDest++ = *ptrSrc++;
+  return dest;
 }
-s21_size_t s21_strcspn(const char *str1, const char *str2) {}
 
 int main() {
-  const char *str1 = "Hello, world!";
-  const char *str2 = "aeiou";
+  char src[] = "Hello, world!";
+  char dest[20];
 
-  size_t result = strcspn(str1, str2);
-  printf("The first vowel in '%s' is at position %zu.\n", str1, result);
+  s21_memcpy(dest, src, sizeof(src));
 
-  len = s21_strcspn(str1, str2);
-
-  printf("First matched character is at %d\n", len);
+  printf("Source: %s\n", src);
+  printf("Destination: %s\n", dest);
   return 0;
 }
