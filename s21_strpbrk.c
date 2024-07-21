@@ -1,4 +1,4 @@
-#include "s21_string.h>
+#include "s21_string.h"
 
 char* s21_strpbrk(const char* string1, const char* string2) {
   const char* ptr1 = s21_NULL;
