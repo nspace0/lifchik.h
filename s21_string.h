@@ -1,10 +1,9 @@
 #ifndef S21_STRING_H
 #define S21_STRING_H
-#include <errno.h>
-#include <stddef.h>
+
 #include <stdlib.h>
 
-typedef long unsigned s21_size_t;
+typedef unsigned long s21_size_t;
 #define s21_NULL (void *)0
 
 void *s21_memchr(const void *string, int c, s21_size_t n);
