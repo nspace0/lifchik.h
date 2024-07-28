@@ -2,7 +2,6 @@
 
 #include "../s21_string.h"
 
-
 START_TEST(test_s21_strlen_1) {
   char str[10] = "123456789";
   s21_size_t res = s21_strlen(str);
@@ -79,7 +78,7 @@ Suite *s21_strlen_suite(void) {
 
   s = suite_create("TEST: s21_strlen");
 
-  tc_core = tcase_create("Core");
+  tc_core = tcase_create("strlen_tc");
 
   tcase_add_test(tc_core, test_s21_strlen_1);
   tcase_add_test(tc_core, test_s21_strlen_2);
@@ -95,4 +94,3 @@ Suite *s21_strlen_suite(void) {
 
   return s;
 }
-

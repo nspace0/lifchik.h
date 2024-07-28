@@ -24,12 +24,9 @@ void *s21_memcpy(void *dest, const void *src, s21_size_t n) {
 }
 
 int main() {
-  char src[] = "Hello, world!";
-  char dest[20];
-
-  s21_memcpy(dest, src, sizeof(src));
-
-  printf("Source: %s\n", src);
-  printf("Destination: %s\n", dest);
+  char buffer[100];
+  float pi = 3.14159;
+  sprintf(buffer, "The value of pi is %.2f.", pi);
+  printf("%s\n", buffer);
   return 0;
 }
