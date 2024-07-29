@@ -1,6 +1,5 @@
-#include <check.h>
-
 #include "../s21_string.h"
+#include "main_test.h"
 
 START_TEST(test_s21_strncpy_1) {
   char str[100] = "Hello";
@@ -80,27 +79,67 @@ START_TEST(test_s21_strncpy_11) {
 }
 END_TEST
 
-Suite *s21_strncpy_suite(void) {
-  Suite *s;
-  TCase *tc_core;
+START_TEST(test_s21_strncpy_12) {
+  char s21_dest[] = "Hello, world!\n";
+  char dest[] = "Hello, world!\n";
+  char src[] = "0123456789";
+  int len = 3;
+  char* s21_result = s21_strncpy(s21_dest, src, len);
+  char* result = strncpy(dest, src, len);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  s = suite_create("TEST: s21_strncpy");
+START_TEST(test_s21_strncpy_13) {
+  char s21_dest[256] = "Lorem ipsum dolor sit amet consectetur.\n";
+  char dest[256] = "Lorem ipsum dolor sit amet consectetur.\n";
+  char src[] = "!2345";
+  int len = strlen(src);
+  char* s21_result = s21_strncpy(s21_dest, src, len);
+  char* result = strncpy(dest, src, len);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  tc_core = tcase_create("strncpy_tc");
+START_TEST(test_s21_strncpy_14) {
+  char s21_dest[] = "\0\0\0\0\0";
+  char dest[] = "\0\0\0\0\0";
+  char src[] = "\0";
+  int len = strlen(src);
+  char* s21_result = s21_strncpy(s21_dest, src, len);
+  char* result = strncpy(dest, src, len);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  tcase_add_test(tc_core, test_s21_strncpy_1);
-  tcase_add_test(tc_core, test_s21_strncpy_2);
-  tcase_add_test(tc_core, test_s21_strncpy_3);
-  tcase_add_test(tc_core, test_s21_strncpy_4);
-  tcase_add_test(tc_core, test_s21_strncpy_5);
-  tcase_add_test(tc_core, test_s21_strncpy_6);
-  tcase_add_test(tc_core, test_s21_strncpy_7);
-  tcase_add_test(tc_core, test_s21_strncpy_8);
-  tcase_add_test(tc_core, test_s21_strncpy_9);
-  tcase_add_test(tc_core, test_s21_strncpy_10);
-  tcase_add_test(tc_core, test_s21_strncpy_11);
+START_TEST(test_s21_strncpy_15) {
+  char s21_dest[] = "Lorem ipsum dolor sit amet consectetur.\n";
+  char dest[] = "Lorem ipsum dolor sit amet consectetur.\n";
+  char src[] = "Hello\n";
+  int len = 0;
+  char* s21_result = s21_strncpy(s21_dest, src, len);
+  char* result = strncpy(dest, src, len);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  suite_add_tcase(s, tc_core);
+TCase* tcase_s21_strncpy(void) {
+  TCase* tcase = tcase_create("s21_strncpy");
 
-  return s;
+  tcase_add_test(tcase, test_s21_strncpy_1);
+  tcase_add_test(tcase, test_s21_strncpy_2);
+  tcase_add_test(tcase, test_s21_strncpy_3);
+  tcase_add_test(tcase, test_s21_strncpy_4);
+  tcase_add_test(tcase, test_s21_strncpy_5);
+  tcase_add_test(tcase, test_s21_strncpy_6);
+  tcase_add_test(tcase, test_s21_strncpy_7);
+  tcase_add_test(tcase, test_s21_strncpy_8);
+  tcase_add_test(tcase, test_s21_strncpy_9);
+  tcase_add_test(tcase, test_s21_strncpy_10);
+  tcase_add_test(tcase, test_s21_strncpy_11);
+  tcase_add_test(tcase, test_s21_strncpy_12);
+  tcase_add_test(tcase, test_s21_strncpy_13);
+  tcase_add_test(tcase, test_s21_strncpy_14);
+  tcase_add_test(tcase, test_s21_strncpy_15);
+  return tcase;
 }

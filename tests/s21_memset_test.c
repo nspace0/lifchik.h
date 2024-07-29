@@ -1,6 +1,5 @@
-#include <check.h>
-
 #include "../s21_string.h"
+#include "main_test.h"
 
 START_TEST(test_s21_memset_1) {
   char str[10] = "Hello";
@@ -82,25 +81,82 @@ START_TEST(test_s21_memset_10) {
 }
 END_TEST
 
-Suite *s21_memset_suite(void) {
-  Suite *s;
-  TCase *tc_core;
+START_TEST(test_s21_memset_11) {
+  char s21_str[] = "Lorem ipsum dolor sit amet consectetur.";
+  char str[] = "Lorem ipsum dolor sit amet consectetur.";
+  char c = '.';
+  int n = 1;
+  char *s21_result = s21_memset(s21_str, c, n);
+  char *result = memset(str, c, n);
+  ck_assert_ptr_eq(s21_result, s21_str);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  s = suite_create("TEST: s21_memset");
+START_TEST(test_s21_memset_12) {
+  char s21_str[] = "\0\0\0\0\0";
+  char str[] = "\0\0\0\0\0";
+  char c = '\0';
+  int n = 1;
+  char *s21_result = s21_memset(s21_str, c, n);
+  char *result = memset(str, c, n);
+  ck_assert_ptr_eq(s21_result, s21_str);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  tc_core = tcase_create("memset_tc");
+START_TEST(test_s21_memset_13) {
+  char s21_str[] = "0123356789";
+  char str[] = "0123356789";
+  char c = '\04';
+  int n = strlen(str);
+  char *s21_result = s21_memset(s21_str, c, n);
+  char *result = memset(str, c, n);
+  ck_assert_ptr_eq(s21_result, s21_str);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  tcase_add_test(tc_core, test_s21_memset_1);
-  tcase_add_test(tc_core, test_s21_memset_2);
-  tcase_add_test(tc_core, test_s21_memset_3);
-  tcase_add_test(tc_core, test_s21_memset_4);
-  tcase_add_test(tc_core, test_s21_memset_5);
-  tcase_add_test(tc_core, test_s21_memset_6);
-  tcase_add_test(tc_core, test_s21_memset_7);
-  tcase_add_test(tc_core, test_s21_memset_8);
-  tcase_add_test(tc_core, test_s21_memset_9);
-  tcase_add_test(tc_core, test_s21_memset_10);
-  suite_add_tcase(s, tc_core);
+START_TEST(test_s21_memset_14) {
+  char s21_str[] = "Lorem ipsum dolor sit amet consectetur.";
+  char str[] = "Lorem ipsum dolor sit amet consectetur.";
+  char c = '^';
+  int n = 7;
+  char *s21_result = s21_memset(s21_str, c, n);
+  char *result = memset(str, c, n);
+  ck_assert_ptr_eq(s21_result, s21_str);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  return s;
+START_TEST(test_s21_memset_15) {
+  char s21_str[] = "Lorem ipsum dolor sit amet consectetur.";
+  char str[] = "Lorem ipsum dolor sit amet consectetur.";
+  char c = '\n';
+  int n = strlen(str);
+  char *s21_result = s21_memset(s21_str, c, n);
+  char *result = memset(str, c, n);
+  ck_assert_ptr_eq(s21_result, s21_str);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
+
+TCase *tcase_s21_memset(void) {
+  TCase *tcase = tcase_create("s21_memset");
+  tcase_add_test(tcase, test_s21_memset_1);
+  tcase_add_test(tcase, test_s21_memset_2);
+  tcase_add_test(tcase, test_s21_memset_3);
+  tcase_add_test(tcase, test_s21_memset_4);
+  tcase_add_test(tcase, test_s21_memset_5);
+  tcase_add_test(tcase, test_s21_memset_6);
+  tcase_add_test(tcase, test_s21_memset_7);
+  tcase_add_test(tcase, test_s21_memset_8);
+  tcase_add_test(tcase, test_s21_memset_9);
+  tcase_add_test(tcase, test_s21_memset_10);
+  tcase_add_test(tcase, test_s21_memset_11);
+  tcase_add_test(tcase, test_s21_memset_12);
+  tcase_add_test(tcase, test_s21_memset_13);
+  tcase_add_test(tcase, test_s21_memset_14);
+  tcase_add_test(tcase, test_s21_memset_15);
+  return tcase;
 }

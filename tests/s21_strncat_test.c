@@ -1,6 +1,5 @@
-#include <check.h>
-
 #include "../s21_string.h"
+#include "main_test.h"
 
 START_TEST(test_s21_strncat_1) {
   char str[100] = "Hello";
@@ -80,27 +79,19 @@ START_TEST(test_s21_strncat_11) {
 }
 END_TEST
 
-Suite *s21_strncat_suite(void) {
-  Suite *s;
-  TCase *tc_core;
+TCase *tcase_s21_strncat(void) {
+  TCase *tcase = tcase_create("s21_strncat");
 
-  s = suite_create("TEST: s21_strncat");
-
-  tc_core = tcase_create("strncat_tc");
-
-  tcase_add_test(tc_core, test_s21_strncat_1);
-  tcase_add_test(tc_core, test_s21_strncat_2);
-  tcase_add_test(tc_core, test_s21_strncat_3);
-  tcase_add_test(tc_core, test_s21_strncat_4);
-  tcase_add_test(tc_core, test_s21_strncat_5);
-  tcase_add_test(tc_core, test_s21_strncat_6);
-  tcase_add_test(tc_core, test_s21_strncat_7);
-  tcase_add_test(tc_core, test_s21_strncat_8);
-  tcase_add_test(tc_core, test_s21_strncat_9);
-  tcase_add_test(tc_core, test_s21_strncat_10);
-  tcase_add_test(tc_core, test_s21_strncat_11);
-
-  suite_add_tcase(s, tc_core);
-
-  return s;
+  tcase_add_test(tcase, test_s21_strncat_1);
+  tcase_add_test(tcase, test_s21_strncat_2);
+  tcase_add_test(tcase, test_s21_strncat_3);
+  tcase_add_test(tcase, test_s21_strncat_4);
+  tcase_add_test(tcase, test_s21_strncat_5);
+  tcase_add_test(tcase, test_s21_strncat_6);
+  tcase_add_test(tcase, test_s21_strncat_7);
+  tcase_add_test(tcase, test_s21_strncat_8);
+  tcase_add_test(tcase, test_s21_strncat_9);
+  tcase_add_test(tcase, test_s21_strncat_10);
+  tcase_add_test(tcase, test_s21_strncat_11);
+  return tcase;
 }

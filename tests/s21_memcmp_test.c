@@ -1,6 +1,5 @@
-#include <check.h>
-
 #include "../s21_string.h"
+#include "main_test.h"
 
 START_TEST(test_s21_memcmp_1) {
   char str[] = "Hello, world!";
@@ -90,27 +89,62 @@ START_TEST(test_s21_memcmp_11) {
 }
 END_TEST
 
-Suite *s21_memcmp_suite(void) {
-  Suite *s;
-  TCase *tc_core;
+START_TEST(test_s21_memcmp_12) {
+  char str1[] = "abcde";
+  char str2[] = "abCde";
+  int len = strlen(str2);
+  int result = s21_memcmp(str1, str2, len);
+  int expected = memcmp(str1, str2, len);
+  ck_assert_int_eq(sign_int(result), sign_int(expected));
+}
+END_TEST
 
-  s = suite_create("TEST: s21_memcmp");
+START_TEST(test_s21_memcmp_13) {
+  char str1[] = "abcDe";
+  char str2[] = "abcde";
+  int len = strlen(str2);
+  int result = s21_memcmp(str1, str2, len);
+  int expected = memcmp(str1, str2, len);
+  ck_assert_int_eq(sign_int(result), sign_int(expected));
+}
+END_TEST
 
-  tc_core = tcase_create("memcmp_tc");
+START_TEST(test_s21_memcmp_14) {
+  char str1[] = "abcDe";
+  char str2[] = "abcde";
+  int len = strlen(str2);
+  int result = s21_memcmp(str1, str2, len);
+  int expected = memcmp(str1, str2, len);
+  ck_assert_int_eq(sign_int(result), sign_int(expected));
+}
+END_TEST
 
-  tcase_add_test(tc_core, test_s21_memcmp_1);
-  tcase_add_test(tc_core, test_s21_memcmp_2);
-  tcase_add_test(tc_core, test_s21_memcmp_3);
-  tcase_add_test(tc_core, test_s21_memcmp_4);
-  tcase_add_test(tc_core, test_s21_memcmp_5);
-  tcase_add_test(tc_core, test_s21_memcmp_6);
-  tcase_add_test(tc_core, test_s21_memcmp_7);
-  tcase_add_test(tc_core, test_s21_memcmp_8);
-  tcase_add_test(tc_core, test_s21_memcmp_9);
-  tcase_add_test(tc_core, test_s21_memcmp_10);
-  tcase_add_test(tc_core, test_s21_memcmp_11);
+START_TEST(test_s21_memcmp_15) {
+  char str1[] = "Lorem ipsum dolor sit amet consectetur.";
+  char str2[] = "Lorem.";
+  int len = strlen(str2);
+  int result = s21_memcmp(str1, str2, len);
+  int expected = memcmp(str1, str2, len);
+  ck_assert_int_eq(sign_int(result), sign_int(expected));
+}
+END_TEST
 
-  suite_add_tcase(s, tc_core);
-
-  return s;
+TCase *tcase_s21_memcmp(void) {
+  TCase *tcase = tcase_create("s21_memcmp");
+  tcase_add_test(tcase, test_s21_memcmp_1);
+  tcase_add_test(tcase, test_s21_memcmp_2);
+  tcase_add_test(tcase, test_s21_memcmp_3);
+  tcase_add_test(tcase, test_s21_memcmp_4);
+  tcase_add_test(tcase, test_s21_memcmp_5);
+  tcase_add_test(tcase, test_s21_memcmp_6);
+  tcase_add_test(tcase, test_s21_memcmp_7);
+  tcase_add_test(tcase, test_s21_memcmp_8);
+  tcase_add_test(tcase, test_s21_memcmp_9);
+  tcase_add_test(tcase, test_s21_memcmp_10);
+  tcase_add_test(tcase, test_s21_memcmp_11);
+  tcase_add_test(tcase, test_s21_memcmp_12);
+  tcase_add_test(tcase, test_s21_memcmp_13);
+  tcase_add_test(tcase, test_s21_memcmp_14);
+  tcase_add_test(tcase, test_s21_memcmp_15);
+  return tcase;
 }

@@ -1,6 +1,5 @@
-#include <check.h>
-
 #include "../s21_string.h"
+#include "main_test.h"
 
 START_TEST(test_s21_strchr_1) {
   char str[100] = "Hello";
@@ -65,24 +64,86 @@ START_TEST(test_s21_strchr_9) {
 }
 END_TEST
 
-Suite *s21_strchr_suite(void) {
-  Suite *s;
-  TCase *tc_core;
+START_TEST(test_s21_strchr_10) {
+  char str[] = "Hello, world!\n";
+  char c = 'r';
+  char *result = s21_strchr(str, c);
+  char *expected = strchr(str, c);
+  ck_assert_ptr_eq(result, expected);
+}
+END_TEST
 
-  s = suite_create("TEST: s21_strchr");
+START_TEST(test_s21_strchr_11) {
+  char str[] = "Hello, world!\n";
+  char c = 'H';
+  char *result = s21_strchr(str, c);
+  char *expected = strchr(str, c);
+  ck_assert_ptr_eq(result, expected);
+}
+END_TEST
 
-  tc_core = tcase_create("strchr_tc");
+START_TEST(test_s21_strchr_12) {
+  char str[] = "Hello, world!\n";
+  char c = '\n';
+  char *result = s21_strchr(str, c);
+  char *expected = strchr(str, c);
+  ck_assert_ptr_eq(result, expected);
+}
+END_TEST
 
-  tcase_add_test(tc_core, test_s21_strchr_1);
-  tcase_add_test(tc_core, test_s21_strchr_2);
-  tcase_add_test(tc_core, test_s21_strchr_3);
-  tcase_add_test(tc_core, test_s21_strchr_4);
-  tcase_add_test(tc_core, test_s21_strchr_5);
-  tcase_add_test(tc_core, test_s21_strchr_6);
-  tcase_add_test(tc_core, test_s21_strchr_7);
-  tcase_add_test(tc_core, test_s21_strchr_8);
-  tcase_add_test(tc_core, test_s21_strchr_9);
-  suite_add_tcase(s, tc_core);
+START_TEST(test_s21_strchr_13) {
+  char str[] = "1234567890\t1234567890\n";
+  char c = '9';
+  char *result = s21_strchr(str, c);
+  char *expected = strchr(str, c);
+  ck_assert_ptr_eq(result, expected);
+}
+END_TEST
 
-  return s;
+START_TEST(test_s21_strchr_14) {
+  char str[] = "Lorem ipsum dolor sit amet consectetur.\n";
+  char c = '7';
+  char *result = s21_strchr(str, c);
+  char *expected = strchr(str, c);
+  ck_assert_ptr_eq(result, expected);
+}
+END_TEST
+
+START_TEST(test_s21_strchr_15) {
+  char str[256] = "";
+  char c = 'a';
+  char *result = s21_strchr(str, c);
+  char *expected = strchr(str, c);
+  ck_assert_ptr_eq(result, expected);
+}
+END_TEST
+
+START_TEST(test_s21_strchr_16) {
+  char str[] = "Lorem ipsum dolor\0sit amet consectetur.\n";
+  char c = '.';
+  char *result = s21_strchr(str, c);
+  char *expected = strchr(str, c);
+  ck_assert_ptr_eq(result, expected);
+}
+END_TEST
+
+TCase *tcase_s21_strchr(void) {
+  TCase *tcase = tcase_create("s21_strchr");
+  tcase_add_test(tcase, test_s21_strchr_1);
+  tcase_add_test(tcase, test_s21_strchr_2);
+  tcase_add_test(tcase, test_s21_strchr_3);
+  tcase_add_test(tcase, test_s21_strchr_4);
+  tcase_add_test(tcase, test_s21_strchr_5);
+  tcase_add_test(tcase, test_s21_strchr_6);
+  tcase_add_test(tcase, test_s21_strchr_7);
+  tcase_add_test(tcase, test_s21_strchr_8);
+  tcase_add_test(tcase, test_s21_strchr_9);
+  tcase_add_test(tcase, test_s21_strchr_10);
+  tcase_add_test(tcase, test_s21_strchr_11);
+  tcase_add_test(tcase, test_s21_strchr_12);
+  tcase_add_test(tcase, test_s21_strchr_13);
+  tcase_add_test(tcase, test_s21_strchr_14);
+  tcase_add_test(tcase, test_s21_strchr_15);
+  tcase_add_test(tcase, test_s21_strchr_16);
+  return tcase;
 }

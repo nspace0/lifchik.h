@@ -1,6 +1,5 @@
-#include <check.h>
-
 #include "../s21_string.h"
+#include "main_test.h"
 
 START_TEST(test_s21_memcpy_1) {
   char str[10] = "Hello";
@@ -98,27 +97,58 @@ START_TEST(test_s21_memcpy_12) {
 }
 END_TEST
 
-Suite *s21_memcpy_suite(void) {
-  Suite *s;
-  TCase *tc_core;
+START_TEST(test_s21_memcpy_13) {
+  char s21_dest[] = "\0\0\0\0\0";
+  char dest[] = "\0\0\0\0\0";
+  char src[] = "\0";
+  int len = 1;
+  char* s21_result = s21_memcpy(s21_dest, src, len);
+  char* result = memcpy(dest, src, len);
+  ck_assert_ptr_eq(dest, result);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  s = suite_create("TEST: s21_memcpy");
+START_TEST(test_s21_memcpy_14) {
+  char s21_dest[] = "1234567890\t1234567890\n";
+  char dest[] = "1234567890\t1234567890\n";
+  char src[] = "absolute";
+  int len = strlen(src) - 2;
+  char* s21_result = s21_memcpy(s21_dest, src, len);
+  char* result = memcpy(dest, src, len);
+  ck_assert_ptr_eq(dest, result);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  tc_core = tcase_create("memcpy_tc");
+START_TEST(test_s21_memcpy_15) {
+  char s21_dest[64] = "";
+  char dest[64] = "";
+  char src[] = "Hello\n";
+  int len = strlen(src) + 1;
+  char* s21_result = s21_memcpy(s21_dest, src, len);
+  char* result = memcpy(dest, src, len);
+  ck_assert_ptr_eq(dest, result);
+  ck_assert_str_eq(s21_result, result);
+}
+END_TEST
 
-  tcase_add_test(tc_core, test_s21_memcpy_1);
-  tcase_add_test(tc_core, test_s21_memcpy_2);
-  tcase_add_test(tc_core, test_s21_memcpy_3);
-  tcase_add_test(tc_core, test_s21_memcpy_4);
-  tcase_add_test(tc_core, test_s21_memcpy_5);
-  tcase_add_test(tc_core, test_s21_memcpy_6);
-  tcase_add_test(tc_core, test_s21_memcpy_7);
-  tcase_add_test(tc_core, test_s21_memcpy_8);
-  tcase_add_test(tc_core, test_s21_memcpy_9);
-  tcase_add_test(tc_core, test_s21_memcpy_10);
-  tcase_add_test(tc_core, test_s21_memcpy_11);
-  tcase_add_test(tc_core, test_s21_memcpy_12);
-  suite_add_tcase(s, tc_core);
-
-  return s;
+TCase* tcase_s21_memcpy(void) {
+  TCase* tcase = tcase_create("s21_memcpy");
+  tcase_add_test(tcase, test_s21_memcpy_1);
+  tcase_add_test(tcase, test_s21_memcpy_2);
+  tcase_add_test(tcase, test_s21_memcpy_3);
+  tcase_add_test(tcase, test_s21_memcpy_4);
+  tcase_add_test(tcase, test_s21_memcpy_5);
+  tcase_add_test(tcase, test_s21_memcpy_6);
+  tcase_add_test(tcase, test_s21_memcpy_7);
+  tcase_add_test(tcase, test_s21_memcpy_8);
+  tcase_add_test(tcase, test_s21_memcpy_9);
+  tcase_add_test(tcase, test_s21_memcpy_10);
+  tcase_add_test(tcase, test_s21_memcpy_11);
+  tcase_add_test(tcase, test_s21_memcpy_12);
+  tcase_add_test(tcase, test_s21_memcpy_13);
+  tcase_add_test(tcase, test_s21_memcpy_14);
+  tcase_add_test(tcase, test_s21_memcpy_15);
+  return tcase;
 }

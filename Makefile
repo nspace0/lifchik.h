@@ -1,60 +1,58 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -std=c11 -g --coverage
-LDFLAGS = -lcheck -lpthread -lrt -lm -lsubunit --coverage
+CFLAGS = -Wall -Wextra -Werror -std=c11
+LIBFLAGS = -lm -lpthread
 
-SRC_DIR = src
-TEST_DIR = $(SRC_DIR)/tests
-COVERAGE_DIR = coverage
+ifeq ($(shell uname), Darwin)
+    CFLAGS += -I/opt/homebrew/Cellar/check/0.15.2/include
+    LIBFLAGS += -L/opt/homebrew/Cellar/check/0.15.2/lib -lcheck
+endif
 
-SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
-TEST_FILES = $(wildcard $(TEST_DIR)/*.c)
-OBJ_FILES = $(patsubst %.c,%.o,$(SRC_FILES))
-TEST_OBJ_FILES = $(patsubst %.c,%.o,$(TEST_FILES))
+ifeq ($(shell uname), Linux)
+    CFLAGS += -I/usr/include/check
+    LIBFLAGS += -L/usr/lib -lcheck -lsubunit -lm
+endif
 
-TARGET = test_runner
+CFILES = $(wildcard s21_*.c)
+OFILES = $(patsubst %.c, %.o, $(CFILES))
 
-.PHONY: all clean test coverage
+TEST_DIR = tests
+TEST_CFILES = $(wildcard $(TEST_DIR)/*_test.c)
+TEST_OFILES = $(patsubst %.c, %.o, $(TEST_CFILES))
 
-all: $(TARGET)
+all : s21_string.a
 
-$(TARGET): $(OBJ_FILES) $(TEST_OBJ_FILES)
-	$(CC) tests/test_runner.c s21_*.c$(TEST_OBJ_FILES) -o $(TARGET) $(LDFLAGS)
+s21_string.a : $(CFILES)
+	$(CC) -c $(CFLAGS) $(CFILES)
+	ar rcs $@ $(OFILES)
+	ranlib $@
 
-$(OBJ_FILES): $(SRC_FILES)
-	$(CC) $(CFLAGS) -c $(SRC_FILES)
+test : clean $(TEST_CFILES) s21_string.a
+	$(CC) $(CFLAGS) $(TEST_CFILES) s21_string.a -o test.out $(LIBFLAGS)
+	./test.out
 
-$(TEST_OBJ_FILES): $(TEST_FILES)
-	$(CC) $(CFLAGS) -c $(TEST_FILES)
+gcov_report : CFLAGS += -coverage
+gcov_report : clean test
+	gcov -f $(CFILES)
+	mkdir report
+	./test.out
+	lcov --directory . --capture --output-file coverage.info
+	genhtml coverage.info --output-directory ./report
+	
+	
+check :
+	clang-format -style='{BasedOnStyle: Google}' -n *.c */*.c
+	clang-format -style='{BasedOnStyle: Google}' -n *.h */*.h
+	cppcheck --enable=all --suppress=missingIncludeSystem *.c *.h	
 
-clean:
-	rm -f $(OBJ_FILES) $(TEST_OBJ_FILES) $(TARGET)
-	rm -rf $(COVERAGE_DIR)
-	rm -f *.gcda *.gcno *.gcov
+clang :
+	clang-format -style='{BasedOnStyle: Google}' -i *.c */*.c
+	clang-format -style='{BasedOnStyle: Google}' -i *.h */*.h
 
-test: $(TARGET)
-	./$(TARGET)
+clean :
+	rm -f *.o *.a
+	rm -f ./test.out
+	rm -f *.gcno *.gcov *.gcda
+	rm -f *.info
+	rm -fr ./report
 
-coverage: test
-	mkdir -p $(COVERAGE_DIR)
-	lcov --capture --directory . --output-file $(COVERAGE_DIR)/coverage.info
-	genhtml $(COVERAGE_DIR)/coverage.info --output-directory $(COVERAGE_DIR)
-
-
-
-# CC = gcc
-# FLAGS = -Wall -Werror -Wextra -std=c11 
-# OBJ = a a.out 
-
-# all : clean clang build
-
-# build : a 
-
-
-# a : main.c 
-# 	$(CC) $(FLAGS) main.c -o a 
-
-# clean : 
-# 	rm -rf a
-
-# clang : 
-# 	clang-format -i *.c *.h
+.PHONY : all clean test s21_string.a  gcov_report check 

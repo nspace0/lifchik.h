@@ -1,6 +1,5 @@
-#include <check.h>
-
 #include "../s21_string.h"
+#include "main_test.h"
 
 START_TEST(test_s21_strcspn_1) {
   char str[100] = "Hello, world!";
@@ -79,27 +78,58 @@ START_TEST(test_s21_strcspn_11) {
 }
 END_TEST
 
-Suite *s21_strcspn_suite(void) {
-  Suite *s;
-  TCase *tc_core;
+START_TEST(test_s21_strcspn_12) {
+  char str1[] = "1234567890\t1234567890\n";
+  char str2[] = "157";
+  s21_size_t result = s21_strcspn(str1, str2);
+  s21_size_t expected = strcspn(str1, str2);
+  ck_assert_int_eq(result, expected);
+}
+END_TEST
 
-  s = suite_create("TEST: s21_strcspn");
+START_TEST(test_s21_strcspn_13) {
+  char str1[] = "Lorem ipsum dolor sit amet consectetur.\n";
+  char str2[] = "_!\t\n";
+  s21_size_t result = s21_strcspn(str1, str2);
+  s21_size_t expected = strcspn(str1, str2);
+  ck_assert_int_eq(result, expected);
+}
+END_TEST
 
-  tc_core = tcase_create("strcspn_tc");
+START_TEST(test_s21_strcspn_14) {
+  char str1[] = "Lorem ipsum dolor sit amet consectetur.\n";
+  char str2[] = "123456";
+  s21_size_t result = s21_strcspn(str1, str2);
+  s21_size_t expected = strcspn(str1, str2);
+  ck_assert_int_eq(result, expected);
+}
+END_TEST
 
-  tcase_add_test(tc_core, test_s21_strcspn_1);
-  tcase_add_test(tc_core, test_s21_strcspn_2);
-  tcase_add_test(tc_core, test_s21_strcspn_3);
-  tcase_add_test(tc_core, test_s21_strcspn_4);
-  tcase_add_test(tc_core, test_s21_strcspn_5);
-  tcase_add_test(tc_core, test_s21_strcspn_6);
-  tcase_add_test(tc_core, test_s21_strcspn_7);
-  tcase_add_test(tc_core, test_s21_strcspn_8);
-  tcase_add_test(tc_core, test_s21_strcspn_9);
-  tcase_add_test(tc_core, test_s21_strcspn_10);
-  tcase_add_test(tc_core, test_s21_strcspn_11);
+START_TEST(test_s21_strcspn_15) {
+  char str1[] = "";
+  char str2[] = "Hello";
+  s21_size_t result = s21_strcspn(str1, str2);
+  s21_size_t expected = strcspn(str1, str2);
+  ck_assert_int_eq(result, expected);
+}
+END_TEST
 
-  suite_add_tcase(s, tc_core);
-
-  return s;
+TCase *tcase_s21_strcspn(void) {
+  TCase *tcase = tcase_create("s21_strcspn");
+  tcase_add_test(tcase, test_s21_strcspn_1);
+  tcase_add_test(tcase, test_s21_strcspn_2);
+  tcase_add_test(tcase, test_s21_strcspn_3);
+  tcase_add_test(tcase, test_s21_strcspn_4);
+  tcase_add_test(tcase, test_s21_strcspn_5);
+  tcase_add_test(tcase, test_s21_strcspn_6);
+  tcase_add_test(tcase, test_s21_strcspn_7);
+  tcase_add_test(tcase, test_s21_strcspn_8);
+  tcase_add_test(tcase, test_s21_strcspn_9);
+  tcase_add_test(tcase, test_s21_strcspn_10);
+  tcase_add_test(tcase, test_s21_strcspn_11);
+  tcase_add_test(tcase, test_s21_strcspn_12);
+  tcase_add_test(tcase, test_s21_strcspn_13);
+  tcase_add_test(tcase, test_s21_strcspn_14);
+  tcase_add_test(tcase, test_s21_strcspn_15);
+  return tcase;
 }

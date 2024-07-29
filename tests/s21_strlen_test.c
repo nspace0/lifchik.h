@@ -1,6 +1,5 @@
-#include <check.h>
-
 #include "../s21_string.h"
+#include "main_test.h"
 
 START_TEST(test_s21_strlen_1) {
   char str[10] = "123456789";
@@ -72,25 +71,18 @@ START_TEST(test_s21_strlen_10) {
 }
 END_TEST
 
-Suite *s21_strlen_suite(void) {
-  Suite *s;
-  TCase *tc_core;
+TCase *tcase_s21_strlen(void) {
+  TCase *tcase = tcase_create("s21_strlen");
 
-  s = suite_create("TEST: s21_strlen");
-
-  tc_core = tcase_create("strlen_tc");
-
-  tcase_add_test(tc_core, test_s21_strlen_1);
-  tcase_add_test(tc_core, test_s21_strlen_2);
-  tcase_add_test(tc_core, test_s21_strlen_3);
-  tcase_add_test(tc_core, test_s21_strlen_4);
-  tcase_add_test(tc_core, test_s21_strlen_5);
-  tcase_add_test(tc_core, test_s21_strlen_6);
-  tcase_add_test(tc_core, test_s21_strlen_7);
-  tcase_add_test(tc_core, test_s21_strlen_8);
-  tcase_add_test(tc_core, test_s21_strlen_9);
-  tcase_add_test(tc_core, test_s21_strlen_10);
-  suite_add_tcase(s, tc_core);
-
-  return s;
+  tcase_add_test(tcase, test_s21_strlen_1);
+  tcase_add_test(tcase, test_s21_strlen_2);
+  tcase_add_test(tcase, test_s21_strlen_3);
+  tcase_add_test(tcase, test_s21_strlen_4);
+  tcase_add_test(tcase, test_s21_strlen_5);
+  tcase_add_test(tcase, test_s21_strlen_6);
+  tcase_add_test(tcase, test_s21_strlen_7);
+  tcase_add_test(tcase, test_s21_strlen_8);
+  tcase_add_test(tcase, test_s21_strlen_9);
+  tcase_add_test(tcase, test_s21_strlen_10);
+  return tcase;
 }
